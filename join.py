@@ -14,11 +14,11 @@ mr = MapReduce.MapReduce()
 def mapper(record):
     # key: document identifier
     # value: document contents
-    attributes = record.split()
-    key = attributes[1]
-    tale_name = attributes[0]
+
+    key = record[1]
+    table_name = record[0]
     # (key, tale_name, attributes[2:]
-    value = (table_name, attributes)
+    value = (table_name, record)
     mr.emit_intermediate(key, value)
     
     
@@ -37,7 +37,7 @@ def reducer(key, list_of_values):
     for order in order_tuples:
         for line in line_tuples:
             output = list(order) + list(line)
-            mr.emit(key, output);
+            mr.emit((output));
     
 
 
