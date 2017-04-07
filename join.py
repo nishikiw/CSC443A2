@@ -3,7 +3,7 @@ import sys
 
 
 """
-Word Count Example in the Simple Python MapReduce Framework
+Join query in the Simple Python MapReduce Framework
 """
 
 mr = MapReduce.MapReduce()
@@ -14,19 +14,32 @@ mr = MapReduce.MapReduce()
 def mapper(record):
     # key: document identifier
     # value: document contents
-    key = record[0]
-    value = record[1]
-    words = value.split()
-    for w in words:
-      mr.emit_intermediate(w, 1)
+    attributes = record.split()
+    key = attributes[1]
+    tale_name = attributes[0]
+    # (key, tale_name, attributes[2:]
+    value = (table_name, attributes)
+    mr.emit_intermediate(key, value)
+    
+    
 
 def reducer(key, list_of_values):
     # key: word
     # value: list of occurrence counts
-    total = 0
+    order_tuples =[]
+    line_tuples =[]
     for v in list_of_values:
-      total += v
-    mr.emit((key, total))
+        if(v[0] == "order"):
+            order_tuples.append(v[1])
+        else:
+            line_tuples.append(v[1])
+    
+    for order in order_tuples:
+        for line in line_tuples:
+            output = list(order) + list(line)
+            mr.emit(key, output);
+    
+
 
 # Do not modify below this line
 # =============================
