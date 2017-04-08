@@ -12,20 +12,20 @@ mr = MapReduce.MapReduce()
 # Do not modify above this line
 
 def mapper(record):
-    # key: document identifier
-    # value: document contents
+    # key: order identifier
+    # value: tuple of attributes
 
     key = record[1]
     table_name = record[0]
-    # (key, tale_name, attributes[2:]
+
     value = (table_name, record)
     mr.emit_intermediate(key, value)
     
     
 
 def reducer(key, list_of_values):
-    # key: word
-    # value: list of occurrence counts
+    # key: order identifier
+    # value: list of tuples
     order_tuples =[]
     line_tuples =[]
     for v in list_of_values:
