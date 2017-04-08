@@ -2,7 +2,7 @@ import json
 
 filename = "join.json"
 
-lists = ["join.json"]
+lists = ["join.json", "friend_count.json"]
 
 if __name__ == '__main__':
     
@@ -13,31 +13,26 @@ if __name__ == '__main__':
     
     if filename in lists:
         
-        print(filename + " generates lists")
+        print("Checking1 "+filename)
         
         my_solution_lines = []
         solution_lines = []
         
         for line in my_solution:
-            record = set(json.loads(line))
-            my_solution_lines.append(record)
+            my_solution_lines.append(", ".join(str(x) for x in json.loads(line)))
             
         for line in solution:
-            record = set(json.loads(line))
-            solution_lines.append(record)
+            solution_lines.append(", ".join(str(x) for x in json.loads(line)))
         
-        for mine in my_solution_lines:
-            if mine not in solution_lines:
-                print("redundant: %s" % ", ".join(mine))
-                wrong += 1
-                
-        for real in solution_lines:
-            if real not in my_solution_lines:
-                print("miss: %s" % ", ".join(real))
-                wrong += 1
+        if set(my_solution_lines) != set(solution_lines):
+            print("redundant: %s" % ", ".join(set(my_solution_lines) - set(solution_lines)))
+            print("miss: %s" % ", ".join(set(solution_lines) - set(my_solution_lines)))
+            wrong += 1
     
     else:
     
+        print("Checking2 "+filename)
+        
         dict_mySolution = {}
         dict_solution = {}
         
@@ -51,7 +46,7 @@ if __name__ == '__main__':
             record = json.loads(line)
             key = record[0]
             value = set(record[1])
-            if key not in dict_mySolution or value != dict_mySolution[key]:
+            if key in dict_mySolution and value != dict_mySolution[key]:
                 print("mine: (%s, [%s])" % (key, ",".join(value)))
                 print("true: (%s, [%s])" % (key, ",".join(dict[key])))
                 wrong += 1
