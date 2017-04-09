@@ -1,8 +1,8 @@
 import json
 
-filename = "friend_count.json"
+filename = "multiply.json"
 
-lists = ["join.json", "friend_count.json", "unique_trims.json", "friend_count.json"]
+lists = ["join.json", "friend_count.json", "unique_trims.json", "friend_count.json", "multiply.json"]
 
 if __name__ == '__main__':
     
