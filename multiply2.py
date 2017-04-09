@@ -4,6 +4,10 @@ import sys
 mr = MapReduce.MapReduce()
 
 """
+RUN STEPS:
+python multiply1.py input/matrix.json > matrix1.json
+python multiply2.py matrix1.json > multiply.json
+
 Second round of matrix multiplication.
 Assume A = M_{ij}, B = M_{jk}, we want to compute A * B
 Input is the result json file multiply1.json from first round of matrix multiplication
